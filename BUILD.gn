@@ -55,6 +55,11 @@ source_set("gflags") {
     "$gflags_gen_arch_root/include/private",  # For config.h
   ]
 
+  if (is_winrt) {
+    include_dirs -= [ "$gflags_gen_arch_root/include/private" ]
+    include_dirs += [ "../winrt_compat/gflags/gen/win/include/private" ]
+  }
+
   public_configs = [ ":gflags_config" ]
 
   configs -= [ "//build/config/compiler:chromium_code" ]
