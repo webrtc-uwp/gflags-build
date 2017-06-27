@@ -36,6 +36,8 @@ config("gflags_config") {
 
 source_set("gflags") {
   cflags = []
+  deps = []
+
   sources = [
     "src/src/gflags.cc",
     "src/src/gflags_completions.cc",
@@ -48,6 +50,9 @@ source_set("gflags") {
       "/wd4005",  # WIN32_LEAN_AND_MEAN.
       "/wd4267",  # Conversion from size_t to "type".
     ]
+    if (is_winuwp) {
+      deps += [ "//third_party/winuwp_compat:force_include_all" ]
+    }
   }
 
   include_dirs = [
@@ -55,9 +60,9 @@ source_set("gflags") {
     "$gflags_gen_arch_root/include/private",  # For config.h
   ]
 
-  if (is_winrt) {
+  if (is_winuwp) {
     include_dirs -= [ "$gflags_gen_arch_root/include/private" ]
-    include_dirs += [ "../winrt_compat/gflags/gen/win/include/private" ]
+    include_dirs += [ "//third_party/winuwp_compat/gflags/gen/win/include/private" ]
   }
 
   public_configs = [ ":gflags_config" ]
