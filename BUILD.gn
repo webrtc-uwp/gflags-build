@@ -50,7 +50,7 @@ source_set("gflags") {
       "/wd4005",  # WIN32_LEAN_AND_MEAN.
       "/wd4267",  # Conversion from size_t to "type".
     ]
-    if (is_winuwp) {
+    if (is_target_winuwp) {
       deps += [ "//third_party/winuwp_compat:force_include_all" ]
     }
   }
@@ -60,7 +60,7 @@ source_set("gflags") {
     "$gflags_gen_arch_root/include/private",  # For config.h
   ]
 
-  if (is_winuwp) {
+  if (is_target_winuwp) {
     include_dirs -= [ "$gflags_gen_arch_root/include/private" ]
     include_dirs += [ "//third_party/winuwp_compat/gflags/gen/win/include/private" ]
   }
